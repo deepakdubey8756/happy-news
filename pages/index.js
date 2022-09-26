@@ -1,8 +1,25 @@
+import React, {useState} from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Navigation from '../components/Navigation'
+import Header from '../components/Header'
+import NewsFeed from '../components/NewsFeed'
+import SideBar from '../components/Sidebar'
+
+
 export default function Home() {
+
+  const [isMenu, setisMenu] = useState(0)
+
+
+  const handleClick =()=>{
+      if(isMenu == 0){
+          setisMenu(1);
+      }
+      else{
+          setisMenu(0);
+      }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,7 +29,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-      <Navigation></Navigation>
+      <Header handleClick={handleClick} isMenu={isMenu}/>
+      <div className='w-full flex'>
+        <div className={isMenu == 0 ? " hidden ":"block w-full sm:w-1/6"}>
+        <SideBar/>
+        </div> 
+        <div className={isMenu == 0? "w-full":"hidden sm:w-5/6 sm:block ml-2"}>
+         <NewsFeed/>
+        </div>
+      </div>
       </main>
     </div>
   )
